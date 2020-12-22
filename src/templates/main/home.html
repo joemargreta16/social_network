@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<img src="{% static 'welcome.svg' %}" class="center">
+<h1 style="text-align: center;
+    text-transform: uppercase;
+    background-color: #3F3D56;
+    color: #008080;
+    font-style: arial;
+    font-size: 550%;">to friendbook</h1>
+
+<h3 style="text-align: center;
+    text-transform: uppercase;
+    color: #3F3D56;
+    font-style: arial;
+    font-size: 350%;">{{user}}</h3>
+
+{% else %}
+<img src="{% static 'welcome.svg' %}" class="center">
+<h1 style="text-align: center;
+    text-transform: uppercase;
+    background-color: #3F3D56;
+    color: #008080;
+    font-style: arial;
+    font-size: 550%;">to friendbook</h1>
+{% endif %}
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        console.log("It's working...")
+    })
+</script>
+{% endblock scripts %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+My Invites
+{% endblock title %}
+
+{% block content %}
+{% if is_empty %}
+<img src="{% static '404.png' %}" class="center">
+<h1 align="center">No friend(s) request yet...</h1>
+{% endif %}
+
+{% for obj in query_set %}
+<div class="ui raised segment">
+    <div class="ui grid">
+        <div class="row">
+            <div class="three wide column">
+                <img class="ui small circular image" src="{{ obj.avatar.url }}">
+            </div>
+            <div class="thirteen wide column">
+                <h3>{{ obj.user }}</h3>
+                <p>{{ obj.bio|slice:200 }}...</p><br>
+                <a href="">
+                        <button class="ui primary button mb-5 btn-width"><i class="user icon"></i>See Profile</button>
+                </a>
+                <form action="{% url 'profiles:accept-request' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value="{{ obj.pk }}">
+                    <button type="submit" class="ui primary button mb-5 btn-width"><i class="check icon"></i>Accept Request</button>
+                </form>
+                <form action="{% url 'profiles:decline-request' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value="{{ obj.pk }}">
+                    <button type="submit" class="ui inverted red button mb-5 btn-width"><i class="close icon"></i>Decline Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %}

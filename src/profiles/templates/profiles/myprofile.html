@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Profile
+{% endblock title %}
+
+{% block content %}
+
+<!--MODAL-->
+<div class="ui modal mymodal">
+    <i class="close icon"></i>
+    <div class="header">
+        Update Profile
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="{{ profile.avatar.url }}">
+        </div>
+        <div class="description">
+            <div class="ui header">Update the newest personal information.</div>
+            <form action="" method="POST" class="ui form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+        </div>
+    </div>
+    <div class="actions">
+        <button type="submit" class="ui blue right labeled icon button">
+            Update
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
+
+</div>
+
+<div class="ui segment ui raised">
+    {% if confirm %}
+    <div class="ui green message ui huge message">Your profile has been updated!</div>
+    {% endif %}
+    <h2 align="center">My Profile: {{ request.user }}</h2>
+    <div class="ui grid">
+        <div class="row">
+            <div class="four wide column">
+                <img class="ui medium rounded image" src="{{ profile.avatar.url }}">
+<!--                <img class="ui medium circular image" src={{ profile.avatar.url }}-->
+                <div class="row mt-5">
+                    <button class="ui blue button fluid ui button" id="modal-btn">Update your profile</button>
+                </div>
+            </div>
+            <div class="twelve wide column">
+                <table class="ui blue table">
+                    <tbody>
+                    <tr>
+                        <td class="four wide column">Username</td>
+                        <td class="eight wide column">{{ profile.user }}</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">First name</td>
+                        <td class="eight wide column">{{ profile.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">Last name</td>
+                        <td class="eight wide column">{{ profile.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">Bio</td>
+                        <td class="eight wide column" align="justify">{{ profile.bio }}</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">{{ profile.get_friends_count }} Friend(s)</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">Friends list</td>
+                        <td class="eight wide column">
+                            <ul>
+                                {% for friends in profile.get_friends %}
+                                <li>
+                                    {{ friends }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">Number of posts</td>
+                        <td class="eight wide column">{{ profile.get_post_count }}</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">Number of likes given</td>
+                        <td class="eight wide column">{{ profile.get_likes_given_count }}</td>
+                    </tr>
+                    <tr>
+                        <td class="four wide column">Number of likes given</td>
+                        <td class="eight wide column">{{ profile.get_likes_received_count }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
